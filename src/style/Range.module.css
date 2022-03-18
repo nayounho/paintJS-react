@@ -1,0 +1,10 @@
+.layout {
+  display: flex;
+  flex-flow: row;
+  margin: 20px 0;
+}
+
+.span {
+  font-size: 25px;
+  margin-left: 10px;
+}
