@@ -1,8 +1,12 @@
 import "../style/Colors.css";
 
-const Colors = () => {
+const Colors = ({ setColor }) => {
+  const changeColorHandler = (e) => {
+    const currentColor = e.target.style.backgroundColor;
+    setColor(currentColor);
+  };
   return (
-    <div className="controls_color">
+    <div className="controls_color" onClick={changeColorHandler}>
       <div className="jsColor" style={{ backgroundColor: "#2c2c2c" }}></div>
       <div className="jsColor" style={{ backgroundColor: "white" }}></div>
       <div className="jsColor" style={{ backgroundColor: "#ff3b30" }}></div>

@@ -1,17 +1,23 @@
-import styles from "../style/Range.module.css";
+import "../style/Range.css";
 
-const Range = () => {
+const Range = ({ lineSize, setLineSize }) => {
+  const handleRangeChange = (e) => {
+    const lineRate = e.target.valueAsNumber;
+    setLineSize(lineRate);
+  };
+
   return (
-    <div className={styles.layout}>
+    <div className="range">
       <input
         type="range"
         id="jsRange"
-        min={0.1}
+        min={0.5}
         max={10}
         step={0.2}
-        className={styles.range}
+        defaultValue={lineSize}
+        onClick={handleRangeChange}
       />
-      <span className={styles.span}>3.5</span>
+      <span className="range_text">{lineSize}</span>
     </div>
   );
 };

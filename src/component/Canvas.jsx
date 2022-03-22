@@ -1,27 +1,35 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../style/Canvas.module.css";
 
-const Canvas = () => {
+const Canvas = ({ lineSize, color, filling, setImageUrl }) => {
   const canvasRef = useRef(null);
-  const contextRef = useRef(null);
 
-  const INITIAL_SIZE = 500;
+  const CANVAS_SIZE = 500;
+  const INITIAL_COLOR = "#2c2c2c";
 
   const [ctx, setCtx] = useState();
   const [isDrawing, setIsDrawing] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    canvas.width = INITIAL_SIZE;
-    canvas.height = INITIAL_SIZE;
-
     const context = canvas.getContext("2d");
-    context.strokeStyle = "black";
-    context.lineWidth = 2.5;
-    contextRef.current = context;
+    canvas.width = CANVAS_SIZE;
+    canvas.height = CANVAS_SIZE;
+
+    context.fillStyle = "white";
+    context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+    context.strokeStyle = INITIAL_COLOR;
+    context.lineWidth = "3.5";
 
     setCtx(context);
   }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    context.lineWidth = lineSize;
+    context.strokeStyle = color;
+  }, [lineSize, color, filling]);
 
   const startDrawing = () => {
     setIsDrawing(true);
@@ -44,6 +52,13 @@ const Canvas = () => {
     }
   };
 
+  const clickCanvasHandler = () => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    context.fillStyle = color;
+    if (filling) context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+  };
+
   return (
     <canvas
       className={styles.canvas}
@@ -52,6 +67,7 @@ const Canvas = () => {
       onMouseUp={finishDrawing}
       onMouseMove={drawing}
       onMouseLeave={finishDrawing}
+      onClick={clickCanvasHandler}
     ></canvas>
   );
 };
